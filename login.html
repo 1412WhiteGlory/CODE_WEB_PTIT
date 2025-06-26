@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập</title>
+    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="https://cdn.lineicons.com/4.0/lineicons.css"/>
+</head>  
+<body>
+    <div class="container" id="container">
+
+        <div class="form-container register-container">
+            <form id="registerForm" action="#" method="post">
+                <h1>Đăng ký</h1>
+                <input type="text" id="registerUsername" name="username" placeholder="Tên tài khoản">
+                <input type="email" id="registerEmail" name="email" placeholder="Email">
+                <input type="password" id="registerPassword" name="password" placeholder="Mật khẩu">
+                <div id="registerError" style="color:red;min-height:20px;"></div>
+                <button type="submit">Đăng ký</button>
+                <span>or use your account</span>
+                <div class="social-container">
+                    <a href="#" class="social">
+                        <i class="lni lni-facebook-fill"></i>
+                    </a>
+                    <a href="#" class="social">
+                        <i class="lni lni-google"></i>
+                    </a>
+                </div>
+            </form>
+        </div>
+
+        <div class="form-container login-container">
+            <form id="loginForm" action="#">
+                <h1>Đăng nhập</h1>
+                <input type="email" id="loginEmail" name="email" placeholder="Email">
+                <input type="password" id="loginPassword" name="password" placeholder="Mật khẩu">
+                <div class="content">
+                    <input type="checkbox" name="checkbox" id="checkbox">
+                    <label for="checkbox">Ghi nhớ tài khoản</label>
+                </div>
+                <div class="pass-link">
+                    <a href="#">Quên mật khẩu?</a>
+                </div>
+                <div id="loginError" style="color:red;min-height:20px;"></div>
+                <button type="submit">Đăng nhập</button>
+                <span>hoặc dùng tài khoản của bạn</span>
+                <div class="social-container">
+                    <a href="#" class="social">
+                        <i class="lni lni-facebook-fill"></i>
+                    </a>
+                    <a href="#" class="social">
+                        <i class="lni lni-google"></i>
+                    </a>
+                </div>
+            </form>
+        </div>
+        
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                    <p>Nếu bạn đã có tài khoản, vui lòng đăng nhập ở đây</p>
+                    <button class="ghost" id="login">Đăng nhập
+                        <i class="lni lni-arrow-left login"></i>
+                    </button>
+                </div>
+                <div class="overlay-panel overlay-right">
+                    <p>Nếu bạn chưa có tài khoản, đăng ký để không bỏ lỡ những trải nghiệm</p>
+                    <button class="ghost" id="register">Đăng ký
+                        <i class="lni lni-arrow-right register"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="login.js"></script>
+</body>
+</html>
+
+

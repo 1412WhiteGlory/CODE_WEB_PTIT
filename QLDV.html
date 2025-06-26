@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quản lý Đoàn viên - Đoàn Thanh Niên</title>
+  <link rel="stylesheet" href="./bootstrap-3.4.1-dist/css/bootstrap.min.css"> 
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      font-family: 'Roboto', Arial, sans-serif;
+      background-color: #f5f5f5;
+    }
+    
+    /* header */
+    .navbar {
+      background-color: #3399FF;
+      border: none;
+      border-radius: 0;
+      margin-bottom: 0;
+    }
+    
+    .navbar-brand {
+      display: flex;
+      align-items: center;
+      height: 60px;
+      padding: 10px 15px;
+    }
+    
+    .navbar-brand img {
+      height: 40px;
+      margin-right: 10px;
+    }
+    
+    .navbar-brand h1 {
+      color: white;
+      margin: 0;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .navbar-nav > li > a {
+        color: #FFFFFF !important; 
+        font-weight: bold;
+        text-transform: uppercase;
+        padding-top: 25px;
+        padding-bottom: 25px;
+        transition: all 0.3s ease;
+      }
+    
+    .navbar-inverse .navbar-nav > li > a {
+      color: white;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+    
+    .navbar-inverse .navbar-nav > li > a {
+        color: white;
+      }
+      
+      .navbar-inverse .navbar-nav > li.active > a,
+      .navbar-inverse .navbar-nav > li.active > a:hover,
+      .navbar-inverse .navbar-nav > li.active > a:focus {
+        color: white;
+        background-color: #3399FF;
+      }
+      
+      .navbar-inverse .navbar-nav > li > a:hover,
+      .navbar-inverse .navbar-nav > li > a:focus {
+        color: white;
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+    
+    /* thân trang */
+    .content-section {
+      padding: 30px 0;
+      background-color: white;
+    }
+    
+    .section-title {
+      color: #0277bd;
+      border-bottom: 2px solid #1e88e5;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+    
+    /* bảng */
+    .table-responsive {
+      margin-bottom: 30px;
+      border: 1px solid #ddd;
+    }
+    
+    .table {
+      margin-bottom: 0;
+    }
+    
+    .table > thead > tr > th {
+      background-color: #1e88e5;
+      color: white;
+      border-bottom: 2px solid #0277bd;
+    }
+    
+    .table-hover > tbody > tr:hover {
+      background-color: #e3f2fd;
+    }
+    
+    /* tìm kiếm */
+    .search-container {
+      margin-bottom: 20px;
+    }
+    
+    .search-box {
+      position: relative;
+    }
+    
+    .search-box input {
+      padding-right: 40px;
+      border-radius: 20px;
+      border: 1px solid #ddd;
+      box-shadow: none;
+    }
+    
+    .search-box .btn {
+      position: absolute;
+      right: 0;
+      top: 0;
+      border-radius: 0 20px 20px 0;
+      background-color: #1e88e5;
+      color: white;
+    }
+    
+    /* Units list */
+    .units-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .units-list li {
+      padding: 10px 15px;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+    }
+    
+    .units-list li:hover {
+      background-color: #e3f2fd;
+      cursor: pointer;
+    }
+    
+    .units-list .badge {
+      background-color: #1e88e5;
+    }
+    
+    /* Footer  */
+    .footer {
+        background-color: #3399FF;
+        color: #FFFFFF;
+        padding: 40px 0 20px;
+      }
+      
+      .footer h3 {
+        color: var(--white);
+        border-bottom: 2px solid var(--main-blue);
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+      }
+      
+      .footer p {
+        margin-bottom: 10px;
+      }
+      
+      .footer-contact i {
+        margin-right: 10px;
+        color: #FFFFFF;
+      }
+      
+      .copyright {
+        background-color: rgba(0,0,0,0.2);
+        padding: 15px 0;
+        margin-top: 20px;
+        text-align: center;
+      }
+
+    /* tổng số Đoàn viên */
+    .units-list .total-members {
+        margin-top: 15px;
+        padding-top: 15px;
+        border-top: 2px solid #1e88e5;
+        font-weight: bold;
+      }
+      
+      .units-list .total-members .badge {
+        background-color: #1e88e5;
+        font-size: 16px;
+      }
+      
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <nav class="navbar navbar-default">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></button>
+        <a class="navbar-brand">
+          <img src="Picture_used/logoDTN_PTIT.png" alt="Logo Đoàn">
+          <h1>ĐOÀN THANH NIÊN</h1>
+        </a>
+      </div>
+
+      <div class="collapse navbar-collapse" id="navbar-collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="DTN.html">Trang chủ</a></li>
+          <li><a href="TC.html">Cơ cấu tổ chức Đoàn</a></li>
+          <li><a href="QLDV.html">Quản lý Đoàn viên</a></li>
+          <li class="dropdown">
+            <a href="#" class="login-btn dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              <i class="fa fa-user-circle"></i> Đăng nhập
+            </a>
+            <ul class="dropdown-menu">
+              <li class="user-info">
+                <p><strong>Xin chào!</strong></p>
+                <p>Vui lòng đăng nhập để tiếp tục</p>
+              </li>
+              <li><a href="#" data-toggle="modal" data-target="#loginModal"><i class="fa fa-sign-in"></i> Đăng nhập</a></li>
+              <li><a href="#" data-toggle="modal" data-target="#registerModal"><i class="fa fa-user-plus"></i> Đăng ký</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div id="mainContent">
+    <div class="container" style="margin-top: 30px;">
+      <div class="row">
+        <div class="col-md-12">
+          <h2 class="section-title">QUẢN LÝ ĐOÀN VIÊN</h2>
+          <div id="content">
+            <!-- Nội dung sẽ được hiển thị ở đây -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="loginRequired" style="display:none;text-align:center;margin:40px 0;">
+    <h3>Bạn cần đăng nhập để xem nội dung này.</h3>
+    <a href="login.html" class="btn btn-primary">Đăng nhập</a>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <h3>ĐOÀN THANH NIÊN</h3>
+          <p>Đoàn Thanh niên Cộng sản Hồ Chí Minh là tổ chức chính trị - xã hội của thanh niên Việt Nam do Đảng Cộng sản Việt Nam và Chủ tịch Hồ Chí Minh sáng lập, lãnh đạo và rèn luyện.</p>
+          <p>Đoàn Thanh niên là trường học xã hội chủ nghĩa của thanh niên, là lực lượng dự bị tin cậy của Đảng, là đội quân xung kích cách mạng của thanh niên.</p>
+        </div>
+        
+        <div class="col-md-6">
+          <h3>THÔNG TIN LIÊN HỆ</h3>
+          <div class="footer-contact">
+            <p><i class="fa fa-map-marker"></i> Địa chỉ: Km10, Đường Nguyễn Trãi, Quận Hà Đông, Hà Nội</p>
+            <p><i class="fa fa-phone"></i> Điện thoại: (024) 3854 5678</p>
+            <p><i class="fa fa-envelope"></i> Email: doanthanhnien@ptit.edu.vn</p>
+            <p><i class="fa fa-globe"></i> Website: https://ptit.edu.vn/sinh-vien/doan-thanh-nien/</p>
+            <a href="https://www.facebook.com/DoanThanhNienHVCNBCVT">
+                <p><i class="fa fa-facebook-square"></i> Facebook: Đoàn Thanh niên PTIT</p>
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="copyright">
+        <p>© 2025 Đoàn Thanh niên - Văn phòng Đoàn Học viện. Tất cả quyền được bảo lưu.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal Thêm/Sửa Đoàn viên -->
+  <div class="modal fade" id="memberModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="memberModalTitle">Thêm đoàn viên mới</h4>
+        </div>
+        <div class="modal-body">
+          <form id="memberForm">
+            <input type="hidden" id="memberId">
+            <div class="form-group">
+              <label for="memberCode">Mã ĐV</label>
+              <input type="text" class="form-control" id="memberCode" required>
+            </div>
+            <div class="form-group">
+              <label for="memberName">Họ và tên</label>
+              <input type="text" class="form-control" id="memberName" required>
+            </div>
+            <div class="form-group">
+              <label for="memberDob">Ngày sinh</label>
+              <input type="date" class="form-control" id="memberDob" required>
+            </div>
+            <div class="form-group">
+              <label for="memberClass">Lớp</label>
+              <input type="text" class="form-control" id="memberClass" required>
+            </div>
+            <div class="form-group">
+              <label for="memberFaculty">Khoa</label>
+              <select class="form-control" id="memberFaculty" required>
+                <option value="">Chọn khoa</option>
+                <option value="Công nghệ thông tin">Công nghệ thông tin</option>
+                <option value="Điện tử viễn thông">Điện tử viễn thông</option>
+                <option value="Cơ khí">Cơ khí</option>
+                <option value="Kinh tế">Kinh tế</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="memberPosition">Chức vụ</label>
+              <select class="form-control" id="memberPosition" required>
+                <option value="">Chọn chức vụ</option>
+                <option value="Bí thư">Bí thư</option>
+                <option value="Phó bí thư">Phó bí thư</option>
+                <option value="Ủy viên">Ủy viên</option>
+                <option value="Đoàn viên">Đoàn viên</option>
+              </select>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+          <button type="button" class="btn btn-primary" id="saveMember">Lưu</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Xác nhận xóa -->
+  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Xác nhận xóa</h4>
+        </div>
+        <div class="modal-body">
+          <p>Bạn có chắc chắn muốn xóa đoàn viên này?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+          <button type="button" class="btn btn-danger" id="confirmDelete">Xóa</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- jQuery and Bootstrap JS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script>
+    function updateLoginStatus() {
+      const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+      const username = localStorage.getItem('username');
+      if(isLoggedIn && username) {
+        $('.dropdown-menu').html(`
+          <li class="user-info">
+            <p><strong>Xin chào, ${username}!</strong></p>
+          </li>
+          <li><a href="#" id="logoutBtn"><i class="fa fa-sign-out"></i> Đăng xuất</a></li>
+        `);
+        $('.login-btn').html('<i class="fa fa-user-circle"></i> ' + username);
+        $('#mainContent').show();
+        $('#loginRequired').hide();
+      } else {
+        $('.dropdown-menu').html(`
+          <li class="user-info">
+            <p><strong>Xin chào!</strong></p>
+            <p>Vui lòng đăng nhập để tiếp tục</p>
+          </li>
+          <li><a href="login.html"><i class="fa fa-sign-in"></i> Đăng nhập</a></li>
+        `);
+        $('.login-btn').html('<i class="fa fa-user-circle"></i> Đăng nhập');
+        $('#mainContent').hide();
+        $('#loginRequired').show();
+      }
+    }
+    $(document).on('click', '#logoutBtn', function(e) {
+      e.preventDefault();
+      localStorage.removeItem('isLoggedIn');
+      localStorage.removeItem('username');
+      localStorage.removeItem('fullname');
+      localStorage.removeItem('role');
+      updateLoginStatus();
+    });
+    $(document).ready(function() {
+      updateLoginStatus();
+    });
+
+    // Dữ liệu mẫu
+    let members = [
+      {
+        id: 'DV001',
+        name: 'Nguyễn Văn A',
+        dob: '2000-01-01',
+        class: 'CNTT1',
+        faculty: 'Công nghệ thông tin',
+        position: 'Bí thư'
+      },
+      {
+        id: 'DV002',
+        name: 'Trần Thị B',
+        dob: '2000-03-15',
+        class: 'CNTT2',
+        faculty: 'Công nghệ thông tin',
+        position: 'Phó bí thư'
+      },
+      {
+        id: 'DV003',
+        name: 'Lê Văn C',
+        dob: '2000-05-20',
+        class: 'CNTT3',
+        faculty: 'Công nghệ thông tin',
+        position: 'Ủy viên'
+      }
+    ];
+
+    // Hàm hiển thị danh sách đoàn viên
+    function displayMembers(membersList = members) {
+      const tbody = $('.table tbody');
+      tbody.empty();
+      
+      membersList.forEach(member => {
+        tbody.append(`
+          <tr>
+            <td>${member.id}</td>
+            <td>${member.name}</td>
+            <td>${formatDate(member.dob)}</td>
+            <td>${member.class}</td>
+            <td>${member.faculty}</td>
+            <td>${member.position}</td>
+            <td>
+              <button class="btn btn-sm btn-info" onclick="editMember('${member.id}')">
+                <i class="fa fa-edit"></i>
+              </button>
+              <button class="btn btn-sm btn-danger" onclick="confirmDelete('${member.id}')">
+                <i class="fa fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+        `);
+      });
+    }
+
+    // Hàm format ngày tháng
+    function formatDate(dateString) {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('vi-VN');
+    }
+
+    // Hàm thêm đoàn viên mới
+    function addMember() {
+      console.log('Opening add member modal');
+      $('#memberModalTitle').text('Thêm đoàn viên mới');
+      $('#memberForm')[0].reset();
+      $('#memberId').val('');
+      $('#memberModal').modal('show');
+    }
+
+    // Hàm sửa đoàn viên
+    function editMember(id) {
+      console.log('Editing member:', id);
+      const member = members.find(m => m.id === id);
+      if (member) {
+        $('#memberModalTitle').text('Sửa thông tin đoàn viên');
+        $('#memberId').val(member.id);
+        $('#memberCode').val(member.id);
+        $('#memberName').val(member.name);
+        $('#memberDob').val(member.dob);
+        $('#memberClass').val(member.class);
+        $('#memberFaculty').val(member.faculty);
+        $('#memberPosition').val(member.position);
+        $('#memberModal').modal('show');
+      }
+    }
+
+    // Hàm lưu thông tin đoàn viên
+    function saveMember() {
+      console.log('Saving member data');
+      const memberId = $('#memberId').val();
+      const member = {
+        id: $('#memberCode').val(),
+        name: $('#memberName').val(),
+        dob: $('#memberDob').val(),
+        class: $('#memberClass').val(),
+        faculty: $('#memberFaculty').val(),
+        position: $('#memberPosition').val()
+      };
+
+      console.log('Member data:', member);
+
+      // Kiểm tra dữ liệu
+      if (!member.id || !member.name || !member.dob || !member.class || !member.faculty || !member.position) {
+        alert('Vui lòng điền đầy đủ thông tin!');
+        return;
+      }
+
+      if (memberId) {
+        // Cập nhật
+        const index = members.findIndex(m => m.id === memberId);
+        console.log('Updating member at index:', index);
+        if (index !== -1) {
+          members[index] = member;
+          alert('Cập nhật thông tin thành công!');
+        }
+      } else {
+        // Kiểm tra mã đoàn viên đã tồn tại chưa
+        if (members.some(m => m.id === member.id)) {
+          alert('Mã đoàn viên đã tồn tại!');
+          return;
+        }
+        // Thêm mới
+        console.log('Adding new member');
+        members.push(member);
+        alert('Thêm đoàn viên mới thành công!');
+      }
+
+      // Cập nhật hiển thị
+      displayMembers();
+      updateStatistics();
+      $('#memberModal').modal('hide');
+    }
+
+    // Hàm xác nhận xóa
+    function confirmDelete(id) {
+      $('#deleteModal').data('id', id).modal('show');
+    }
+
+    // Hàm xóa đoàn viên
+    function deleteMember(id) {
+      members = members.filter(m => m.id !== id);
+      displayMembers();
+      updateStatistics();
+      alert('Xóa đoàn viên thành công!');
+    }
+
+    // Hàm cập nhật thống kê
+    function updateStatistics() {
+      const stats = {};
+      members.forEach(member => {
+        stats[member.faculty] = (stats[member.faculty] || 0) + 1;
+      });
+
+      const total = members.length;
+      $('.units-list').html(`
+        ${Object.entries(stats).map(([faculty, count]) => `
+          <li>
+            <span>Khoa ${faculty}</span>
+            <span class="badge">${count}</span>
+          </li>
+        `).join('')}
+        <li class="total-members">
+          <span>Tổng số đoàn viên</span>
+          <span class="badge">${total}</span>
+        </li>
+      `);
+    }
+
+    // Hàm tìm kiếm
+    function searchMembers(keyword) {
+      const filtered = members.filter(member => 
+        member.id.toLowerCase().includes(keyword.toLowerCase()) ||
+        member.name.toLowerCase().includes(keyword.toLowerCase()) ||
+        member.class.toLowerCase().includes(keyword.toLowerCase()) ||
+        member.faculty.toLowerCase().includes(keyword.toLowerCase())
+      );
+      displayMembers(filtered);
+    }
+
+    // Xử lý sự kiện khi trang được tải
+    $(document).ready(function() {
+      if (!checkLogin()) {
+        $('#content').html('<div class="alert alert-warning" role="alert"><strong>Thông báo:</strong> Bạn không có thẩm quyền để truy cập thông tin này. Vui lòng đăng nhập!</div>');
+      } else {
+        // Hiển thị nội dung trang QLDV
+        $('#content').html(`
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Danh sách Đoàn viên</h3>
+            </div>
+            <div class="panel-body">
+              <div class="search-container">
+                <div class="search-box">
+                  <input type="text" class="form-control" placeholder="Tìm kiếm đoàn viên...">
+                  <button class="btn btn-primary"><i class="fa fa-search"></i></button>
+                </div>
+              </div>
+              
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>Mã ĐV</th>
+                      <th>Họ và tên</th>
+                      <th>Ngày sinh</th>
+                      <th>Lớp</th>
+                      <th>Khoa</th>
+                      <th>Chức vụ</th>
+                      <th>Thao tác</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Dữ liệu sẽ được thêm vào đây bởi JavaScript -->
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="text-right">
+                <button class="btn btn-primary" id="addMemberBtn"><i class="fa fa-plus"></i> Thêm đoàn viên</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Thống kê theo đơn vị</h3>
+            </div>
+            <div class="panel-body">
+              <ul class="units-list">
+                <!-- Thống kê sẽ được thêm vào đây bởi JavaScript -->
+              </ul>
+            </div>
+          </div>
+        `);
+
+        // Hiển thị dữ liệu ban đầu
+        displayMembers();
+        updateStatistics();
+
+        // Xử lý tìm kiếm
+        $('.search-box input').on('keyup', function() {
+          searchMembers($(this).val());
+        });
+
+        // Xử lý nút thêm đoàn viên
+        $('#addMemberBtn').on('click', function() {
+          addMember();
+        });
+
+        // Xử lý lưu form
+        $('#saveMember').on('click', function() {
+          saveMember();
+        });
+
+        // Xử lý xóa
+        $('#confirmDelete').on('click', function() {
+          const id = $('#deleteModal').data('id');
+          deleteMember(id);
+          $('#deleteModal').modal('hide');
+        });
+      }
+    });
+  </script>
+</body>
+</html>
